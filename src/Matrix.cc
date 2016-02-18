@@ -1257,6 +1257,7 @@ NAN_METHOD(Matrix::Ptr) {
 //  return;
 }
 
+// TODO - should also accept scalars
 NAN_METHOD(Matrix::AbsDiff) {
   Nan::HandleScope scope;
 
@@ -1336,6 +1337,8 @@ NAN_METHOD(Matrix::BitwiseAnd) {
 
   info.GetReturnValue().Set(Nan::Null());
 }
+
+// TODO - no bitwise or method found
 
 NAN_METHOD(Matrix::CountNonZero) {
   Nan::HandleScope scope;
@@ -1618,7 +1621,7 @@ cv::Rect* setRect(Local<Object> objRect, cv::Rect &result) {
   result.height = size->Get(1)->IntegerValue();
 
   return &result;
-}
+
 
 NAN_METHOD(Matrix::Resize) {
   Nan::HandleScope scope;
@@ -1681,7 +1684,7 @@ NAN_METHOD(Matrix::Rotate) {
   //-------------
   int x = info[1]->IsUndefined() ? round(self->mat.size().width / 2) :
       info[1]->Uint32Value();
-  int y = info[1]->IsUndefined() ? round(self->mat.size().height / 2) :
+  int y = info[2]->IsUndefined() ? round(self->mat.size().height / 2) :
       info[2]->Uint32Value();
 
   cv::Point center = cv::Point(x,y);
@@ -1735,6 +1738,7 @@ NAN_METHOD(Matrix::WarpAffine) {
   return;
 }
 
+// TODO - borderType
 NAN_METHOD(Matrix::PyrDown) {
   SETUP_FUNCTION(Matrix)
 
@@ -1742,6 +1746,7 @@ NAN_METHOD(Matrix::PyrDown) {
   return;
 }
 
+// TODO - dstsize, borderType
 NAN_METHOD(Matrix::PyrUp) {
   SETUP_FUNCTION(Matrix)
 
@@ -1876,7 +1881,7 @@ NAN_METHOD(Matrix::Threshold) {
 
   cv::threshold(self->mat, img->mat, threshold, maxVal, typ);
 
-  info.GetReturnValue().Set(img_to_return);
+  info.GetReturnValue().Set(img_to_return);PT
 }
 
 NAN_METHOD(Matrix::AdaptiveThreshold) {
@@ -2123,6 +2128,7 @@ NAN_METHOD(Matrix::FloodFill) {
       }); */
 
   if (info.Length() < 1 || !info[0]->IsObject()) {
+    // TODO - use a real error
     // error
   }
 
